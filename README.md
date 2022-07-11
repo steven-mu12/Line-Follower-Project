@@ -5,4 +5,4 @@ A line follower robot built completely at home.
 This line follower robot features two GM2 motors, a homemade PCB and a 3d printed chasis.
 
 # demo
-youtube link: 
+youtube link: https://youtu.be/eucNkGSRyUw
