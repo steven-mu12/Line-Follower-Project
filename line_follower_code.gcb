@@ -1,0 +1,176 @@
+
+#CHIP 16f628A
+
+#define debugLed PortA.7
+dir debugLed out
+
+
+' defining the phototransistors
+#define PTLEFT PortA.1
+#define PTRIGHT PortA.0
+
+dir PTLEFT in
+dir PTRIGHT in
+
+' defining the motors
+#define leftMotor1 PortB.3
+#define leftMotor2 PortB.2
+#define rightMotor1 PortB.5
+#define rightMotor2 PortB.4
+
+dir leftMotor1 out
+dir leftMotor2 out
+dir rightMotor1 out
+dir rightMotor2 out
+
+dim lastDirection as byte
+
+' sub routines
+sub forwards()
+  set leftMotor1 on
+  set leftMotor2 off
+  set rightMotor1 on
+  set rightMotor2 off
+end sub
+
+sub adjustRight()
+  set leftMotor1 off
+  set leftMotor2 on
+  set rightMotor1 on
+  set rightMotor2 off
+end sub
+
+sub adjustLeft()
+  set leftMotor1 on
+  set leftMotor2 off
+  set rightMotor1 off
+  set rightMotor2 on
+end sub
+
+sub stop()
+  set leftMotor1 off
+  set leftMotor2 off
+  set rightMotor1 off
+  set rightMotor2 off
+end sub
+
+
+' BIG CALIBRATION SEQUENCE
+
+
+sub simpleLineSearch()
+
+
+
+end sub
+
+
+' this is the main loop
+
+'do forever
+'
+'
+'  if PTLEFT = true & PTRIGHT = true then
+'    set debugLed on
+'    forwards()
+'
+'  else if PTLEFT = true & PTRIGHT = false then
+'    stop()
+'
+'    set debugLed on
+'    wait 3000 ms
+'    set debugLed off
+'    wait 3000 ms
+'
+'  else if PTRIGHT = true & PTLEFT = false then
+'    stop()
+'
+'    set debugLed on
+'    wait 1000 ms
+'    set debugLed off
+'    wait 1000 ms
+'
+'  else
+'    set debugLed off
+'
+'    if lastDirection = 1 then
+'
+'      for counter0 = 1 to 20
+'        if PTLEFT | PTRIGHT then exit for
+'        lastDirection = 1
+'
+'        adjustLeft()
+'        wait 50 ms
+'      Next
+'
+'      for counter1 = 1 to 40
+'        if PTLEFT | PTRIGHT then exit for
+'        lastDirection = 2
+'
+'        adjustRight()
+'        wait 50 ms
+'      Next
+'
+'      for counter2 = 1 to 20
+'        if PTLEFT | PTRIGHT then exit for
+'        lastDirection = 1
+'
+'        adjustLeft()
+'        wait 50 ms
+'      Next
+'
+'    end if
+'
+'
+'    if lastDirection = 2 then
+'
+'      for counter0 = 1 to 20
+'        if PTLEFT | PTRIGHT then exit for
+'        lastDirection = 2
+'
+'        adjustRight()
+'        wait 50 ms
+'      Next
+'
+'      for counter1 = 1 to 40
+'        if PTLEFT | PTRIGHT then exit for
+'        lastDirection = 1
+'
+'        adjustLeft()
+'        wait 50 ms
+'      Next
+'
+'      for counter2 = 1 to 20
+'        if PTLEFT | PTRIGHT then exit for
+'        lastDirection = 2
+'
+'        adjustRight()
+'        wait 50 ms
+'      Next
+'
+'    end if
+'
+'  end if
+'
+'
+'loop
+'end
+
+do forever
+
+  if PTRIGHT then
+    adjustRight()
+
+  else if PTLEFT then
+    set debugLed on
+    adjustLeft()
+
+  else
+    forwards()
+    set debugLed off
+
+  end if
+
+
+loop
+end
